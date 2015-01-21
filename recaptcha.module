@@ -6,6 +6,17 @@
  */
 
 /**
+* Implements hook_config_info().
+*/
+function recaptcha_config_info() {
+  $prefixes['recaptcha.settings'] = array(
+    'label' => t('Settings'),
+    'group' => t('Recaptcha'),
+  );
+  return $prefixes;
+}
+
+/**
  * Implements hook_menu().
  */
 function recaptcha_menu() {
@@ -13,7 +24,7 @@ function recaptcha_menu() {
   $items['admin/config/people/captcha/recaptcha'] = array(
     'title' => 'reCAPTCHA',
     'description' => 'Administer the Google No CAPTCHA reCAPTCHA web service.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('recaptcha_admin_settings'),
     'access arguments' => array('administer recaptcha'),
     'type' => MENU_LOCAL_TASK,
@@ -44,7 +55,7 @@ function recaptcha_captcha($op, $captcha_type = '') {
     case 'generate':
       $captcha = array();
       if ($captcha_type == 'reCAPTCHA') {
-        $recaptcha_site_key = variable_get('recaptcha_site_key', FALSE);
+        $recaptcha_site_key = config_get('recaptcha.settings', 'site_key');
 
         // Test if captcha can be used, falling back to Math if it is not
         // configured, the library won't load, or the server is down.
@@ -63,7 +74,7 @@ function recaptcha_captcha($op, $captcha_type = '') {
           '#markup' => '<div class="g-recaptcha" data-sitekey="' . $recaptcha_site_key . '"></div>',
         );
 
-        drupal_add_js('https://www.google.com/recaptcha/api.js', array('defer' => TRUE, 'async' => TRUE));
+        backdrop_add_js('https://www.google.com/recaptcha/api.js', array('defer' => TRUE, 'async' => TRUE));
       }
       return $captcha;
   }
@@ -73,7 +84,7 @@ function recaptcha_captcha($op, $captcha_type = '') {
  * CAPTCHA Callback; Validates the reCAPTCHA code.
  */
 function recaptcha_captcha_validation($solution, $response, $element, $form_state) {
-  $recaptcha_private_key= variable_get('recaptcha_private_key', FALSE);
+  $recaptcha_private_key= config_get('recaptcha.settings', 'private_key');
   if (empty($_POST['g-recaptcha-response']) || empty($recaptcha_private_key) || (!_recaptcha_load_library())) {
     return FALSE;
   }

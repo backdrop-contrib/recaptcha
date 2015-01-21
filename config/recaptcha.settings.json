@@ -1,0 +1,5 @@
+{
+    "_config_name": "recaptcha.settings",
+    "site_key": "abc",
+    "private_key": "def"
+}
