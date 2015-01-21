@@ -7,7 +7,7 @@ reCAPTCHA helps power massive-scale online collaboration.
 
 Versions
 --------
-All 1.x versions implement the traditional reCAPTCHA. All 2.x versions implement the new NoCAPTCHA reCAPTCHA.
+This port is currently just of the 2.x version which implements the new NoCAPTCHA reCAPTCHA.
 
 Requirements
 ------------
