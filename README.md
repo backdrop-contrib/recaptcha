@@ -13,7 +13,7 @@ Requirements
 ------------
 reCAPTCHA depends on the CAPTCHA module.
 
-INSTALLATION
+Installation
 ------------
 
 - Install this module using the official Backdrop CMS instructions at
@@ -24,6 +24,14 @@ INSTALLATION
 - Enter the site key and private key that you receive after signing up for the reCAPTCHA service through Google.
 - Click "Save Configuration"
 - Go to Configuration > People > CAPTCHA (admin/config/people/captcha) to configure on which forms the ReCAPTCHA will appear and for whom.
+
+Known Issues
+------------
+
+- cURL requests fail because of outdated root certificate. The reCAPTCHA module
+  may not able to connect to Google servers and fails to verify the answer.
+  
+  See https://www.drupal.org/node/2481341 for more information.
 
 License
 -------

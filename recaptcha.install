@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Provides install, updated, and uninstall functions for recaptcha.
+ * Installation file for reCAPTCHA module.
  */
 
 /**
@@ -18,4 +18,24 @@ function recaptcha_update_1000() {
   // Delete variables.
   update_variable_del('recaptcha_site_key');
   update_variable_del('recaptcha_private_key');
+}
+
+/**
+ * Rename private_key to secret_key and add new variable defaults
+ */
+function recaptcha_update_1001() {
+  $config = config('recaptcha.settings');
+
+  // Renamed variable
+  $private_key = $config->get('private_key');
+  $config->set('secret_key', $private_key);
+  $config->clear('private_key');
+
+  // Set defaults for new variables
+  $config->set('theme', 'light');
+  $config->set('type', 'image');
+  $config->set('size', '');
+  $config->set('tabindex', 0);
+  $config->set('noscript', 0);
+  $config->save();
 }

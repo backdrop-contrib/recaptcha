@@ -1,8 +1,8 @@
 <?php
 /**
- * Sample PHP code to use reCAPTCHA V2.
+ * This is a PHP library that handles calling reCAPTCHA.
  *
- * @copyright Copyright (c) 2014, Google Inc.
+ * @copyright Copyright (c) 2015, Google Inc.
  * @link      http://www.google.com/recaptcha
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,44 +24,51 @@
  * THE SOFTWARE.
  */
 
-require_once "recaptchalib.php";
+namespace ReCaptcha\RequestMethod;
 
-// Register API keys at https://www.google.com/recaptcha/admin
-$siteKey = "";
-$secret = "";
-// reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
-$lang = "en";
+/**
+ * Convenience wrapper around the cURL functions to allow mocking.
+ */
+class Curl
+{
 
-// The response from reCAPTCHA
-$resp = null;
-// The error code from reCAPTCHA, if any
-$error = null;
+    /**
+     * @see http://php.net/curl_init
+     * @param string $url
+     * @return resource cURL handle
+     */
+    public function init($url = null)
+    {
+        return curl_init($url);
+    }
 
-$reCaptcha = new ReCaptcha($secret);
+    /**
+     * @see http://php.net/curl_setopt_array
+     * @param resource $ch
+     * @param array $options
+     * @return bool
+     */
+    public function setoptArray($ch, array $options)
+    {
+        return curl_setopt_array($ch, $options);
+    }
 
-// Was there a reCAPTCHA response?
-if ($_POST["g-recaptcha-response"]) {
-    $resp = $reCaptcha->verifyResponse(
-        $_SERVER["REMOTE_ADDR"],
-        $_POST["g-recaptcha-response"]
-    );
+    /**
+     * @see http://php.net/curl_exec
+     * @param resource $ch
+     * @return mixed
+     */
+    public function exec($ch)
+    {
+        return curl_exec($ch);
+    }
+
+    /**
+     * @see http://php.net/curl_close
+     * @param resource $ch
+     */
+    public function close($ch)
+    {
+        curl_close($ch);
+    }
 }
-?>
-<html>
-  <head><title>reCAPTCHA Example</title></head>
-  <body>
-<?php
-if ($resp != null && $resp->success) {
-    echo "You got it!";
-}
-?>
-    <form action="?" method="post">
-      <div class="g-recaptcha" data-sitekey="<?php echo $siteKey;?>"></div>
-      <script type="text/javascript"
-          src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang;?>">
-      </script>
-      <br/>
-      <input type="submit" value="submit" />
-    </form>
-  </body>
-</html>
