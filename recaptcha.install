@@ -6,6 +6,17 @@
  */
 
 /**
+ * Implements of hook_install().
+ */
+function recaptcha_install() {
+  $t = get_t();
+
+  // Be friendly to your users: what to do after install?
+  backdrop_set_message($t('You can now <a href="!recaptcha_admin">configure the reCAPTCHA module</a> for your site.',
+    array('!recaptcha_admin' => url('admin/config/people/captcha/recaptcha'))), 'status');
+}
+
+/**
  * Move recaptcha settings from variables to config.
  */
 function recaptcha_update_1000() {
