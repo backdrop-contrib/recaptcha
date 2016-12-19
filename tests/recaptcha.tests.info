@@ -1,0 +1,5 @@
+[ReCaptchaBasicTest]
+name = ReCaptcha Basic Test
+description = Test basic functionality of reCAPTCHA module.
+group = ReCaptcha
+file = recaptcha.test
