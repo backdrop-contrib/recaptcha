@@ -6,20 +6,11 @@
  */
 
 /**
- * Implements hook_autoload_info().
+ * Load third-party reCaptcha library
+ * plus our custom RequestMethod
  */
-function recaptcha_autoload_info() {
-  return array(
-    'ReCaptcha' => 'recaptcha-php/src/ReCaptcha/ReCaptcha.php',
-    'RequestMethod' => 'recaptcha-php/src/ReCaptcha/RequestMethod.php',
-    'RequestParameters' => 'recaptcha-php/src/ReCaptcha/RequestParameters.php',
-    'Response' => 'recaptcha-php/src/ReCaptcha/Response.php',
-    'Post' => 'recaptcha-php/src/ReCaptcha/RequestMethod/Post.php',
-    'Socket' => 'recaptcha-php/src/ReCaptcha/RequestMethod/Socket.php',
-    'SocketPost' => 'recaptcha-php/src/ReCaptcha/RequestMethod/SocketPost.php',
-    'BackdropPost' => 'src/ReCaptcha/RequestMethod/BackdropPost.php',
-  );
-}
+require_once dirname(__FILE__) . '/recaptcha-php/src/autoload.php';
+require_once dirname(__FILE__) . '/src/ReCaptcha/RequestMethod/BackdropPost.php';
 
 /**
  * Implements hook_help().
@@ -138,12 +129,12 @@ function recaptcha_captcha($op, $captcha_type = '') {
           );
 
           // @todo: #1664602: D7 does not yet support "async" in drupal_add_js().
-          // drupal_add_js(url('https://www.google.com/recaptcha/api.js', array('query' => array('hl' => $language->language), 'absolute' => TRUE)), array('defer' => TRUE, 'async' => TRUE, 'type' => 'external'));
+          // drupal_add_js(url('https://www.google.com/recaptcha/api.js', array('query' => array('hl' => $language->langcode), 'absolute' => TRUE)), array('defer' => TRUE, 'async' => TRUE, 'type' => 'external'));
           $data = array(
             '#tag' => 'script',
             '#value' => '',
             '#attributes' => array(
-              'src' => url('https://www.google.com/recaptcha/api.js', array('query' => array('hl' => $language->language), 'absolute' => TRUE)),
+              'src' => url('https://www.google.com/recaptcha/api.js', array('query' => array('hl' => $language->langcode), 'absolute' => TRUE)),
               'async' => 'async',
               'defer' => 'defer',
             ),
