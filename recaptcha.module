@@ -6,13 +6,6 @@
  */
 
 /**
- * Load third-party reCaptcha library
- * plus our custom RequestMethod
- */
-require_once dirname(__FILE__) . '/recaptcha-php/src/autoload.php';
-require_once dirname(__FILE__) . '/src/ReCaptcha/RequestMethod/BackdropPost.php';
-
-/**
  * Implements hook_help().
  */
 function recaptcha_help($path, $arg) {
@@ -154,6 +147,12 @@ function recaptcha_captcha($op, $captcha_type = '') {
  * CAPTCHA Callback; Validates the reCAPTCHA code.
  */
 function recaptcha_captcha_validation($solution, $response, $element, $form_state) {
+
+  //Load third-party reCaptcha library
+  //plus our custom RequestMethod
+  module_load_include('php', 'recaptcha', 'recaptcha-php/src/autoload');
+  module_load_include('php', 'recaptcha', 'src/ReCaptcha/RequestMethod/BackdropPost');
+
   $recaptcha_secret_key = config_get('recaptcha.settings', 'secret_key');
   if (empty($_POST['g-recaptcha-response']) || empty($recaptcha_secret_key)) {
     return FALSE;
