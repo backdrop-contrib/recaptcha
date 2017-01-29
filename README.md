@@ -49,4 +49,4 @@ Credits
 
 Ported to Backdrop by Herb v/d Dool (https://github.com/herbdool/)
 
-This module was originally written for Drupal (https://drupal.org/project/captcha). Drupal maintainers are: [diolan](https://www.drupal.org/u/diolan), [liam-morland](https://www.drupal.org/u/liam-morland), [id.medion](https://www.drupal.org/u/id.medion), [RobLoach](https://www.drupal.org/u/robloach).
+This module was originally written for Drupal (https://drupal.org/project/recaptcha). Drupal maintainers are: [hass](https://www.drupal.org/u/hass), [diolan](https://www.drupal.org/u/diolan), [liam-morland](https://www.drupal.org/u/liam-morland), [id.medion](https://www.drupal.org/u/id.medion), [RobLoach](https://www.drupal.org/u/robloach).
