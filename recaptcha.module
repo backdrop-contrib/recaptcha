@@ -126,6 +126,7 @@ function recaptcha_captcha($op, $captcha_type = '') {
             url('https://www.google.com/recaptcha/api.js', array('query' => array('hl' => $language->langcode), 'absolute' => TRUE)),
             array(
               'defer' => TRUE,
+              'attributes' => array('async' => 'async'),
               'type' => 'external',
               'cache' => FALSE
             )
